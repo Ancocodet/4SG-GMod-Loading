@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+        <script>   
+            
+            this.progress = 0.0;
+            this.filesNeeded = 0;
+            this.filesTotal = 1; 
+            
+            function initializeGMod(){
+                updateProgress();
+            }
+
+            function GameDetails(servername, serverurl, mapname, maxplayers, steamid, gamemode) {
+                setServerInfo(servername, mapname, maxplayers, gamemode);
+            }
+
+            function SetFilesTotal(numFiles) {
+                this.filesTotal = Math.max(0, numFiles);
+            }
+
+            function SetStatusChanged(status) {
+                onStatusChange(status);
+            }
+
+            function SetFilesNeeded(numFiles) {
+                this.filesNeeded = Math.max(0, numFiles);
+            }
+
+            function DownloadingFile(fileName) {
+                this.filesNeeded = Math.max(0, this.filesNeeded - 1);
+                updateProgress();
+                
+                var status = 'Downloading ' + filePath + '...';
+
+                onStatusChanged(status);
+            }   
+            
+            function onStatusChange(status){
+                if (status === 'Sending client info...') {
+                    this.filesNeeded = 0;   
+                    document.getElementById("status").innerHTML = "";
+                    updateProgress();
+                }else{
+                    document.getElementById("status").innerHTML = status;
+                }
+            }
+            
+            function setServerInfo(serverName, mapName, maxPlayers, gamemode){
+                document.getElementById("mappreview").src = 'http://image.www.gametracker.com/images/maps/160x120/garrysmod/' + mapName + '.jpg';
+                document.getElementById("mapname").innerHTML = mapName;
+                document.getElementById("servername").innerHTML = serverName;
+                document.getElementById("slots").innerHTML = maxPlayers + " Spieler Slots";
+                document.getElementById("gamemode").innerHTML = gamemode;
+            }
+
+            function updateProgress(){
+                var filesRemaining = Math.max(0, this.filesTotal - this.filesNeeded),
+                    progress = (this.filesTotal > 0) ?
+                        (filesRemaining / this.filesTotal) : 1;
+                this.progress = Math.round(progress * 100);
+                document.getElementById("loadingbar").style.width = this.progress + '%';
+            }
+        </script>
+    </head>
+    <body style="background-image: url(images/492784.jpg);" onload="initializeGMod();">
+        <center>
+            <div class="loading-body">
+                <h1 class="header">4StupidGamers</h1>
+                <h4 style="color: white; margin-top: 5px; font-family: sans-serif;" id="servername">No Server Found</h4>
+                <div class="row">
+                    <div class="col s6 rules">
+                        <h3 class="rules-header">Server Info</h3>   
+                        <div class="rules-divider"></div>
+                        <div class="row">
+                            <div class="col s6">
+                                <img src="images/4Gamers.png" style="width: 100%; height: 100%;" id="mappreview">
+                            </div>
+                            <div class="col s6 info">
+                                <br>
+                                <a class="mapname" id="mapname">Ich bin die Map</a><br>
+                                <a class="mapname" id="slots">0 Spieler Slots</a><br><br>
+                                <a class="mapname" id="gamemode">TraitorTown</a>
+                            </div>
+                        </div>    
+                    </div>
+                    <div class="col s6 rules">
+                        <h3 class="rules-header">Regeln</h3>   
+                        <div class="rules-divider"></div>
+                        <ul class="rules-list">
+                            <li>Bugusing u. Hacking sind verboten</li>
+                            <li>Beleidigungen sind untersagt</li>
+                            <li>Kein Random-Killen</li>
+                            <li>Kein Ghosten</li>
+                            <li>Spamen ist untersagt</li>
+                        </ul>
+                        <div class="rules-divider"></div>
+                        <h4 class="rules-header">Teammitglieder dürfen Bans aussprechen</h4>
+                    </div>    
+                </div>
+                <div class="progress">
+                    <div class="progress-bar" id="loadingbar" style="width: 100%;"></div>
+                </div>
+                <div class="progress-text" id="status">Downloading ...</div>
+            </div>
+        </center>
+    </body>
+</html>
