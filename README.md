@@ -9,8 +9,8 @@
   
 **Instalation**
 
-  	1. Open the **server.cfg** of your Garry's Mod Server
-  	2. add **sv_loadingurl "yoururl"** 
+  	1. Open the server.cfg of your Garry's Mod Server
+  	2. add the line: sv_loadingurl "yoururl" to your config
   	3. Save the File and Restart the Server
   	4. Watch the Loading Screen
   
