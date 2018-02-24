@@ -6,4 +6,4 @@
 
 ### Other
 1. [Operating System]: <here>
-2. [Node.js version]: <here>
+2. [Webserver]: <here>
